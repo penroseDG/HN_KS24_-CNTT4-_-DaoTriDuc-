@@ -5,6 +5,7 @@
 #include<stdlib.h>
 #include<string.h>
 
+// Cau truc du lieu
 typedef struct Project {
     int id ;
     char title [100] ;
@@ -43,17 +44,19 @@ DoneProject* createDoneProject( int id , char title[],char owner[],int priority 
     newProject -> prev = NULL ;
     return newProject ;
 }
+
+// Tao du an
 void addProject() {
     int id , priority ;
     char title[100] , owner[100] ;
     printf("Nhap id du an  : \n");
-    scanf("%d" , &id );
+    scanf("%d" ,&id );
     getchar();
     printf("Nhap ten du an  : \n ");
     gets(title);
     printf("Nhap nguoi lam du an  : \n ");
     gets(owner);
-    printf(" Nhap do uu tien du an  : \n");
+    printf("Nhap do uu tien du an  : \n");
     scanf("%d",&priority);
     Project* newProject = createProject( id,title,owner,priority );
     newProject -> next = head ;
@@ -61,14 +64,20 @@ void addProject() {
     // reuturn head = newProject ;
 }
 
+// Hien thi du an
 void showProjects() {
     Project* temp = head;
+    if (!temp) {
+        printf("Tam thoi khong co du an nao \n");
+        return;
+    }
     while (temp) {
         printf("|%d | %s | %s | %d\n", temp->id, temp->title, temp->owner, temp->priority);
         temp = temp->next;
     }
 }
 
+// Xoa du an
 void deleteProject() {
     int id;
     printf("Nhap id du an  : \n");
@@ -84,6 +93,7 @@ void deleteProject() {
     free(temp);
 }
 
+// Cap nhat du an
 void updateProject() {
     int id;
     printf("Nhap id du an  : \n");
@@ -98,8 +108,12 @@ void updateProject() {
     gets(temp->owner);
     printf("Nhap do uu tien du an  : \n");
     scanf("%d", &temp->priority);
+
+    temp = temp->next;
+    free(temp);
 }
 
+// Sap xep du an
 void sortProjects() {
     Project *i, *j;
     for (i = head; i; i = i->next) {
@@ -122,12 +136,18 @@ void sortProjects() {
         }
     }
 }
+
+// Tim kiem du an theo ten
 void searchByName() {
     char name[100];
     getchar();
     printf("Nhap ten du an : \n");
     gets(name);
     Project *temp = head ;
+    // if (  ) {
+    //     printf("khong tim thay du an co ten phu hop  \n");
+    //     return;
+    // }
     while (temp) {
         if (strcmp(temp->title, name) == 0)
             printf("|%d | %s | %s | %d\n", temp->id, temp->title, temp->owner, temp->priority);
@@ -147,6 +167,7 @@ int main(void){
         printf("6. Sap xep du an theo tien do uu tien  \n");
         printf("7. Tim kiem du an theo ten  \n");
         printf("8. Thoat \n");
+        printf("Nhap chuc nang can su dung : ");
         scanf("%d" , &choice);
         switch (choice) {
             case 1 :
@@ -171,8 +192,10 @@ int main(void){
                 searchByName();
                 break;
             case 8:
-                printf("Thoat chuong trinh  ");
-
+                printf("Thoat chuong trinh  \n");
+                break ;
+            default:
+                printf(" Xin vui long nhap lai chuc nang \n");
         }
     }while(choice !=8);
 return 0 ;
